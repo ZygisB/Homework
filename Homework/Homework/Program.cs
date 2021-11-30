@@ -4,7 +4,7 @@ namespace Homework
 {
     class Program
     {
-        static void Main1()
+        static void Main()
         {
             bool isNumber;
             string word;
@@ -93,6 +93,38 @@ namespace Homework
                             break;
                         case 49:
                             individualNumber = "Vienas";
+                            numberInText = numberInText + individualNumber;
+                            break;
+                        case 50:
+                            individualNumber = "Du";
+                            numberInText = numberInText + individualNumber;
+                            break;
+                        case 51:
+                            individualNumber = "Trys";
+                            numberInText = numberInText + individualNumber;
+                            break;
+                        case 52:
+                            individualNumber = "Keturi";
+                            numberInText = numberInText + individualNumber;
+                            break;
+                        case 53:
+                            individualNumber = "Penki";
+                            numberInText = numberInText + individualNumber;
+                            break;
+                        case 54:
+                            individualNumber = "Sesi";
+                            numberInText = numberInText + individualNumber;
+                            break;
+                        case 55:
+                            individualNumber = "Septyni";
+                            numberInText = numberInText + individualNumber;
+                            break;
+                        case 56:
+                            individualNumber = "Astuoni";
+                            numberInText = numberInText + individualNumber;
+                            break;
+                        case 57:
+                            individualNumber = "Devyni";
                             numberInText = numberInText + individualNumber;
                             break;
                     }
