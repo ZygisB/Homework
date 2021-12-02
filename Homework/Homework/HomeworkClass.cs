@@ -6,7 +6,7 @@ namespace Homework
     {
         static void Main()
         {
-
+            Console.WriteLine(D20(21));
         }
 
         static int Max(int number1, int number2, int number3)
@@ -25,20 +25,11 @@ namespace Homework
             }
 
         }
-
-        static int IsPrimal(int number1)
+        static int D20(int number1)
         {
-            if (number1 > 3)
-            {
-                for (int i = number1; i < word.Length; i++)
-
-            }
-        }
-        static int D20(out int number1)
-        {
-            Random number = new Random(1, 20);
-            int num = rnd.Next();
-            return num;
+            Random rnd = new Random();
+            int randomNumber = rnd.Next(1, number1);
+            return randomNumber;
         }
     }
 }

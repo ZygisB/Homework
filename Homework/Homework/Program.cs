@@ -4,7 +4,7 @@ namespace Homework
 {
     class Program
     {
-        static void Main()
+        static void Main1()
         {
             bool isNumber;
             string word;
