@@ -2,7 +2,7 @@
 
 namespace Homework
 {
-    class Functions4
+    class HomeworkClass
     {
         static void Main()
         {
@@ -26,14 +26,6 @@ namespace Homework
 
         }
 
-        static int IsPrimal(int number1)
-        {
-            if (number1 > 3)
-            {
-                for (int i = number1; i < word.Length; i++)
-
-            }
-        }
         static int D20(out int number1)
         {
             Random number = new Random(1, 20);
