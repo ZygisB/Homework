@@ -2,7 +2,7 @@
 
 namespace Homework
 {
-    class Functions4
+    class HomeworkClass
     {
         static void Main()
         {
@@ -25,7 +25,8 @@ namespace Homework
             }
 
         }
-        static int D20(int number1)
+
+        static int D20(out int number1)
         {
             Random rnd = new Random();
             int randomNumber = rnd.Next(1, number1);
