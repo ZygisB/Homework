@@ -23,7 +23,7 @@ namespace Homework
             Console.WriteLine(ChangeNumberToText(wordNumber));
 
             //Testing
-            //*
+            /*
             for (int i=1000000; i< 1220000; i++)
             {
                 Console.WriteLine(ChangeNumberToText(i));
@@ -101,7 +101,14 @@ namespace Homework
                 {
                     firstSymbol = (int)word[0];
                 }
-                numberInText = numberInText + Ones(firstSymbol);
+                if (firstSymbol == 48)
+                {
+                    numberInText = "Nulis";
+                }
+                else
+                {
+                    numberInText = numberInText + Ones(firstSymbol);
+                }
             }
 
             else if (symbolCount == 2)
@@ -243,7 +250,14 @@ namespace Homework
                     sixthSymbol = (int)word[5];
                     seventhSymbol = (int)word[6];
                 }
-                numberInText = numberInText + Ones(firstSymbol) + " milijonas " + HundredThousands(secondSymbol, thirdSymbol, fourthSymbol, fifthSymbol, sixthSymbol, seventhSymbol);
+                if (firstSymbol == 49)
+                {
+                    numberInText = numberInText + Ones(firstSymbol) + " milijonas " + HundredThousands(secondSymbol, thirdSymbol, fourthSymbol, fifthSymbol, sixthSymbol, seventhSymbol);
+                }
+                else
+                {
+                    numberInText = numberInText + Ones(firstSymbol) + " milijonai " + HundredThousands(secondSymbol, thirdSymbol, fourthSymbol, fifthSymbol, sixthSymbol, seventhSymbol);
+                }
             }
             else
             {
