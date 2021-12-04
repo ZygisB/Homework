@@ -4,7 +4,7 @@ namespace Homework
 {
     class HomeworkClass
     {
-        static void Main()
+        static void Main1()
         {
             Console.WriteLine(D20(21));
         }
@@ -26,7 +26,7 @@ namespace Homework
 
         }
 
-        static int D20(out int number1)
+        static int D20(int number1)
         {
             Random rnd = new Random();
             int randomNumber = rnd.Next(1, number1);
