@@ -266,7 +266,6 @@ namespace Homework
             return numberInText;
         }
 
-
         static string Ones(int Symbol)
         {
             string individualNumber = "";
