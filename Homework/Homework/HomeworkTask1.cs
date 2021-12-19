@@ -2,7 +2,7 @@
 
 namespace Homework
 {
-    class Program
+    class HomeworkTask1
     {
         static void MainKomework1()
         {
@@ -461,7 +461,6 @@ namespace Homework
 
             return hundredThousands;
         }
-
     }
 }
 
