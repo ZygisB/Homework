@@ -91,7 +91,7 @@ namespace Homework
             }
             return noDuplicates;
         }
-        static bool ArrayComparison(List<int> startingNumberArray, List<int> secondNumberArray)
+        static bool ArrayComparison(List<int> startingNumberArray, List<int> secondNumberArray) //checks if elements in one array are the same in the other array
         {
             bool sameNumbers = true;
 
