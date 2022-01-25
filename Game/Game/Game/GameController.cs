@@ -42,7 +42,7 @@ namespace Game.Game
         {
             Random rnd = new Random();
 
-            for (int id = 0; id < 10; id++)
+            for (int id = 0; id < 7; id++)
             {
                 int x = rnd.Next(1, myGame.width - 1);
                 int y = rnd.Next(1, 5); ;
@@ -105,7 +105,7 @@ namespace Game.Game
                 myGame.Render();
                 scoreWindow.Render();
                 // Control enemy speed
-                if (counter % 5 == 0)
+                if (counter % 8 == 0)
                 {
                     if (myGame.MoveAllEnemiesDown() == true)
                     {
@@ -120,7 +120,7 @@ namespace Game.Game
                 }
                 myGame.GameOver();
                 // Cotrol how often new enemies appear
-                if (counter % 30 == 0)
+                if (counter % 50 == 0)
                 {
                     EnemiesInLoop();
                 }
@@ -132,13 +132,8 @@ namespace Game.Game
                     guiController.GameOver();
                 }
 
-                System.Threading.Thread.Sleep(250);
+                System.Threading.Thread.Sleep(200);
             } while (needToRender);
-        }
-
-        public int GetScore()
-        {
-            return score;
         }
     }
 }
