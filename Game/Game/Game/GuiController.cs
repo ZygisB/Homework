@@ -15,11 +15,11 @@ namespace Game.Game
         GameOverWindow gameOverWindow;
         GameController myGame = new GameController();
 
-        public GuiController(int score = 0)
+        public GuiController(int score = 0, string gameOverReason="")
         {
             creditWindow = new CreditWindow();
             menuWindow = new MenuWindow();
-            gameOverWindow = new GameOverWindow(score);
+            gameOverWindow = new GameOverWindow(score, gameOverReason);
         }
 
 

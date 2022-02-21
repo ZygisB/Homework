@@ -14,13 +14,14 @@ namespace Game.GUI
         private Window border = new Window(0, 0, 100, 35, '%');
         List<Button> buttonList = new List<Button>();
 
-        public GameOverWindow(int score, int x = 20, int y = 10, int width = 60, int height = 19, char frameChar = '@') : base(x, y, width, height, frameChar)
+        public GameOverWindow(int score, string gameOverReason, int x = 20, int y = 10, int width = 60, int height = 19, char frameChar = '@') : base(x, y, width, height, frameChar)
         {
             int buttonWidth = 16;
             playAgainButton = new Button(x + (width/2-((width-buttonWidth) / 2)), y + (height / 2), buttonWidth, 5, "Play Again");
             menuButton = new Button(x + (width / 2 + (buttonWidth / 2)), y + (height / 2), buttonWidth, 5, "Menu");
             List<String> gameOverText = new List<String>();
             gameOverText.Add(new string("Game Over"));
+            gameOverText.Add(new string(gameOverReason));
             gameOverText.Add(new string("Score: ") + score);
             gameOverTextBlock = new TextBlock(x, y + (height / 4), width, gameOverText);
             buttonList.Add(playAgainButton);

@@ -10,7 +10,7 @@ namespace Game.Game
 {
     class GameController
     {
-
+        
         GameScreen myGame = new GameScreen(100, 50);
         int score = 0;
 
@@ -124,11 +124,18 @@ namespace Game.Game
                 {
                     EnemiesInLoop();
                 }
-                if (myGame.GameOver() == true | lives <=0)
+                if (myGame.GameOver() == true)
                 {
                     needToRender = false;
                     Console.Clear();
-                    GuiController guiController = new GuiController(score);
+                    GuiController guiController = new GuiController(score,"You died");
+                    guiController.GameOver();
+                }
+                if (lives <= 0)
+                {
+                    needToRender = false;
+                    Console.Clear();
+                    GuiController guiController = new GuiController(score, "The city was destroyed");
                     guiController.GameOver();
                 }
 
