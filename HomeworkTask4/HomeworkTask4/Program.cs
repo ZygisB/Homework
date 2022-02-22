@@ -8,14 +8,6 @@ namespace HomeworkTask4
     {
         static void Main()
         {
-            //MainMenu testMenu = new MainMenu();
-
-            //PlayerMenu testPlayer = new PlayerMenu();
-
-            //testMenu.Render();
-
-            //testPlayer.Render();
-
             GuiController guiController = new GuiController();
 
             Console.CursorVisible = false;
