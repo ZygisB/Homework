@@ -58,17 +58,17 @@ namespace FinalProject.Unit
         public void WriteHeroHealthAndAttack()
         {
             Console.SetCursorPosition(60, 0);
-            Console.WriteLine("                                ");
+            Console.WriteLine("                                   ");
             Console.SetCursorPosition(60, 0);
-            Console.WriteLine("Health: " + hero.Health);
+            Console.WriteLine("Health: " + Math.Ceiling(hero.Health));
             Console.SetCursorPosition(60, 1);
-            Console.WriteLine("                                ");
+            Console.WriteLine("                                   ");
             Console.SetCursorPosition(60, 1);
-            Console.WriteLine("Attack: " + hero.Attack);
+            Console.WriteLine("Attack: " + Math.Ceiling(hero.Attack));
             Console.SetCursorPosition(60, 2);
-            Console.WriteLine("                                ");
+            Console.WriteLine("                                   ");
             Console.SetCursorPosition(60, 2);
-            Console.WriteLine("Defence: " + hero.defence);
+            Console.WriteLine("Defence: " + Math.Ceiling(hero.defence));
             Console.SetCursorPosition(60, 3);
             Console.WriteLine("                                   ");
             Console.SetCursorPosition(60, 3);

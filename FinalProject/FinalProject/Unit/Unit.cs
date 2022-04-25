@@ -10,11 +10,11 @@ namespace FinalProject.Unit
     {
         public int X { get; set; }
         public int Y { get; set; }
-        public int Health { get; set; }
-        public int Attack { get; set; }
+        public double Health { get; set; }
+        public double Attack { get; set; }
         public string Name { get; set; }
 
-        public Unit(string Name, int X, int Y, int Health, int Attack)
+        public Unit(string Name, int X, int Y, double Health, double Attack)
         {
             this.Name = Name;
             this.X = X;

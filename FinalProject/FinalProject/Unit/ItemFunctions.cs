@@ -9,7 +9,6 @@ namespace FinalProject.Unit
     class ItemFunctions
     {
         private List<Item> items = new List<Item>();
-        private Item item;
 
         public void AddItem(Item item)
         {

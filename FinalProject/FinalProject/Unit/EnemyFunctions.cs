@@ -9,7 +9,6 @@ namespace FinalProject.Unit
     class EnemyFunctions
     {
         private List<Enemy> enemies = new List<Enemy>();
-        private Enemy enemy;
 
         public void AddEnemy(Enemy enemy)
         {
@@ -81,6 +80,13 @@ namespace FinalProject.Unit
         public void ClearEnemies()
         {
             enemies.Clear();
+        }
+        public void ApplyHeroDefense(Hero hero)
+        {
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Attack = enemy.Attack * (1 - (hero.defence/100));
+            }
         }
     }
 }

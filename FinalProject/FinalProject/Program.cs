@@ -8,11 +8,11 @@ namespace FinalProject
     {
         static void Main()
         {
-            GameController gameController = new GameController();
+            GuiController guiController = new GuiController();
 
             Console.CursorVisible = false;
-            gameController.InitGame();
-            gameController.StartGameLoop();
+
+            guiController.ShowMenu();
         }
     }
 }
