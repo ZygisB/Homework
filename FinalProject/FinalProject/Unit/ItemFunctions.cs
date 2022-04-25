@@ -14,20 +14,25 @@ namespace FinalProject.Unit
         {
             items.Add(item);
         }
-        public void GeneratePotion(int x, int y)
+        public void GeneratePotion(int x, int y, double health)
         {
-            Item newPotion = new Item("Potion", 0, x, y, 10, 0, 0);
+            Item newPotion = new Item("Potion", 0, x, y, health, 0, 0);
             items.Add(newPotion);
         }
-        public void GenerateSword(int x, int y)
+        public void GenerateSword(int x, int y, double attack)
         {
-            Item newSword = new Item("Sword", 1, x, y, 0, 3, 0);
+            Item newSword = new Item("Sword", 1, x, y, 0, attack, 0);
             items.Add(newSword);
         }
-        public void GenerateArmor(int x, int y)
+        public void GenerateArmor(int x, int y, double armor)
         {
-            Item newArmor = new Item("Armor", 2, x, y, 0, 0, 10);
+            Item newArmor = new Item("Armor", 2, x, y, 0, 0, armor);
             items.Add(newArmor);
+        }
+        public void GenerateArrows(int x, int y, double attack)
+        {
+            Item newArrows = new Item("Arrows", 3, x, y, 0, attack, 0, 10);
+            items.Add(newArrows);
         }
         public void Render()
         {
@@ -39,11 +44,15 @@ namespace FinalProject.Unit
                 }
                 else if (item.type == 1)
                 {
-                    item.Render(item.X, item.Y, '|');
+                    item.Render(item.X, item.Y, '!');
                 }
                 else if (item.type == 2)
                 {
                     item.Render(item.X, item.Y, '~');
+                }
+                else if (item.type == 3)
+                {
+                    item.Render(item.X, item.Y, '}');
                 }
             }
         }

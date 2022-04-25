@@ -8,11 +8,11 @@ namespace FinalProject.Level
 {
     class LevelConstant
     {
-        public int[,] levelData { get; set; }
-        public int[,] levelData1 { get; set; }
-        public int[,] levelData2 { get; set; }
-        public int[,] levelData3 { get; set; }
-        public List<int[,]> levelList  { get; set; }
+        public int[,] levelData { get; }
+        public int[,] levelData1 { get; }
+        public int[,] levelData2 { get; }
+        public int[,] levelData3 { get; }
+        public List<int[,]> levelList  { get; }
 
     public LevelConstant()
         {

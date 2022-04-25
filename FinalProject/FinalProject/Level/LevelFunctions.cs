@@ -9,7 +9,6 @@ namespace FinalProject.Level
     class LevelFunctions
     {
         LevelData levelData;
-        LevelConstant levelConstant = new LevelConstant();
 
         public void RenderLevel(LevelData levelData)
         {
@@ -49,12 +48,14 @@ namespace FinalProject.Level
         }
         public int[,] ReturnLevelArray(int levelNumber)
         {
+            LevelConstant levelConstant = new LevelConstant();
             int[,] levelArray = levelConstant.levelList[levelNumber];
             return levelArray;
         }
         public void SetLevel(int levelNumber)
         {
-            LevelData levelData = new LevelData(levelConstant.levelList[levelNumber]);
+            LevelConstant levelConstant = new LevelConstant();
+            LevelData levelData = new LevelData(levelConstant.levelList[levelNumber]);  
             this.levelData = levelData;
         }
         public LevelData ReturnLevel()

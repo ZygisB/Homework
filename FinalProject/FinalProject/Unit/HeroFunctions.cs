@@ -73,6 +73,10 @@ namespace FinalProject.Unit
             Console.WriteLine("                                   ");
             Console.SetCursorPosition(60, 3);
             Console.WriteLine("Enemies killed: " + hero.enemiesKilled);
+            Console.SetCursorPosition(60, 3);
+            Console.WriteLine("                                   ");
+            Console.SetCursorPosition(60, 3);
+            Console.WriteLine("Arrows: " + hero.arrows);
         }
         public void SetHeroPosition(int x, int y)
         {
@@ -88,6 +92,25 @@ namespace FinalProject.Unit
                 gameOver = true;
             }
             return gameOver;
+        }
+        public void SetDirectionUp()
+        {
+            hero.direction = 0;
+        }
+        public void SetDirectionRight()
+        {
+             hero.direction = 1;
+        }
+        public void SetDirectionDown()
+        {
+            hero.direction = 2;
+        }
+        public void SetDirectionLeft()
+        {
+            hero.direction = 3;
+        }
+        public void ClearHero()
+        {
         }
     }
 }

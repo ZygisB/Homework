@@ -14,6 +14,7 @@ namespace FinalProject.Game
         LevelFunctions levelFunctions = new LevelFunctions();
         EnemyFunctions enemyFunctions = new EnemyFunctions();
         ItemFunctions itemFunctions = new ItemFunctions();
+        ArrowFunctions arrowFunctions = new ArrowFunctions();
         int heroBaseAttack = 5;
         int heroBaseHealth = 100;
         int counter = 0;
@@ -21,6 +22,9 @@ namespace FinalProject.Game
 
         public void StartGame()
         {
+            enemyFunctions.ClearEnemies();
+            itemFunctions.ClearItems();
+            arrowFunctions.Cleararrows();
             InitHero();
             StartGameLoop();
         }
@@ -58,11 +62,13 @@ namespace FinalProject.Game
             int potionCount = 0;
             int swordCount = 0;
             int armorCount = 0;
+            int arrowsCount = 0;
             Random rnd = new Random();
 
             int rndPotion = rnd.Next(0, 100);
             int rndSword = rnd.Next(0, 100);
             int rndArmor = rnd.Next(0, 100);
+            int rndArrows = rnd.Next(0, 100);
 
             if (rndPotion > 0)
             {
@@ -72,7 +78,7 @@ namespace FinalProject.Game
                     int y = rnd.Next(0, 39);
                     if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), x, y) == 1)
                     {
-                        itemFunctions.GeneratePotion(x, y);
+                        itemFunctions.GeneratePotion(x, y, 15);
                         potionCount++;
                         levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), x, y, 3);
                     }
@@ -83,12 +89,11 @@ namespace FinalProject.Game
             {
                 do
                 {
-
                     int x = rnd.Next(0, 49);
                     int y = rnd.Next(0, 39);
                     if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), x, y) == 1)
                     {
-                        itemFunctions.GenerateSword(x, y);
+                        itemFunctions.GenerateSword(x, y, 3);
                         swordCount++;
                         levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), x, y, 3);
                     }
@@ -98,16 +103,29 @@ namespace FinalProject.Game
             {
                 do
                 {
-
                     int x = rnd.Next(0, 49);
                     int y = rnd.Next(0, 39);
                     if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), x, y) == 1)
                     {
-                        itemFunctions.GenerateArmor(x, y);
+                        itemFunctions.GenerateArmor(x, y, 10);
                         armorCount++;
                         levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), x, y, 3);
                     }
                 } while (armorCount < 1);
+            }
+            if (rndArrows > 0)
+            {
+                do
+                {
+                    int x = rnd.Next(0, 49);
+                    int y = rnd.Next(0, 39);
+                    if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), x, y) == 1)
+                    {
+                        itemFunctions.GenerateArrows(x, y, 5);
+                        arrowsCount++;
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), x, y, 3);
+                    }
+                } while (arrowsCount < 2);
             }
         }
 
@@ -138,12 +156,14 @@ namespace FinalProject.Game
                     switch (pressedChar.Key)
                     {
                         case ConsoleKey.Escape:
+                            levelFunctions.SetLevel(levelNumber);
                             needToRender = false;
                             break;
                         case ConsoleKey.RightArrow:
                             if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition() + 1, heroFunctions.GetHeroVerticalPosition()) == 4)
                             {
                                 HeroStartsFight(enemyFunctions.GetEnemyByPosition(heroFunctions.GetHeroHorizontalPosition() + 1, heroFunctions.GetHeroVerticalPosition()));
+                                heroFunctions.SetDirectionRight();
                                 break;
                             }
                             else if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition() + 1, heroFunctions.GetHeroVerticalPosition()) == 3)
@@ -153,10 +173,12 @@ namespace FinalProject.Game
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 1);
                                 heroFunctions.MoveHeroRight();
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 2);
+                                heroFunctions.SetDirectionRight();
                                 break;
                             }
                             else if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition() + 1, heroFunctions.GetHeroVerticalPosition()) == 0)
                             {
+                                heroFunctions.SetDirectionRight();
                                 break;
                             }
                             else if ((levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition())) == 5 && (heroFunctions.GetHeroHorizontalPosition() + 2  == levelFunctions.GetLevelLength(levelFunctions.ReturnLevel())))
@@ -170,12 +192,14 @@ namespace FinalProject.Game
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 1);
                                 heroFunctions.MoveHeroRight();
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 2);
+                                heroFunctions.SetDirectionRight();
                                 break;
                             }
                         case ConsoleKey.LeftArrow:
                             if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition() - 1, heroFunctions.GetHeroVerticalPosition()) == 4)
                             {
                                 HeroStartsFight(enemyFunctions.GetEnemyByPosition(heroFunctions.GetHeroHorizontalPosition() - 1, heroFunctions.GetHeroVerticalPosition()));
+                                heroFunctions.SetDirectionLeft();
                                 break;
                             }
                             else if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition() - 1, heroFunctions.GetHeroVerticalPosition()) == 3)
@@ -185,10 +209,12 @@ namespace FinalProject.Game
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 1);
                                 heroFunctions.MoveHeroLeft();
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 2);
+                                heroFunctions.SetDirectionLeft();
                                 break;
                             }
                             else if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition() - 1, heroFunctions.GetHeroVerticalPosition()) == 0)
                             {
+                                heroFunctions.SetDirectionLeft();
                                 break;
                             }
                             else
@@ -197,12 +223,14 @@ namespace FinalProject.Game
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 1);
                                 heroFunctions.MoveHeroLeft();
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 2);
+                                heroFunctions.SetDirectionLeft();
                                 break;
                             }
                         case ConsoleKey.UpArrow:
                             if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition() - 1) == 4)
                             {
                                 HeroStartsFight(enemyFunctions.GetEnemyByPosition(heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition() - 1));
+                                heroFunctions.SetDirectionUp();
                                 break;
                             }
                             else if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition() - 1) == 3)
@@ -212,10 +240,12 @@ namespace FinalProject.Game
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 1);
                                 heroFunctions.MoveHeroUp();
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 2);
+                                heroFunctions.SetDirectionUp();
                                 break;
                             }
                             else if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition() - 1) == 0)
                             {
+                                heroFunctions.SetDirectionUp();
                                 break;
                             }
                             else
@@ -224,12 +254,14 @@ namespace FinalProject.Game
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 1);
                                 heroFunctions.MoveHeroUp();
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 2);
+                                heroFunctions.SetDirectionUp();
                                 break;
                             }
                         case ConsoleKey.DownArrow:
                             if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition() + 1) == 4)
                             {
                                 HeroStartsFight(enemyFunctions.GetEnemyByPosition(heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition() + 1));
+                                heroFunctions.SetDirectionDown();
                                 break;
                             }
                             else if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition() + 1) == 3)
@@ -239,10 +271,12 @@ namespace FinalProject.Game
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 1);
                                 heroFunctions.MoveHeroDown();
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 2);
+                                heroFunctions.SetDirectionDown();
                                 break;
                             }
                             else if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition() + 1) == 0)
                             {
+                                heroFunctions.SetDirectionDown();
                                 break;
                             }
                             else
@@ -251,7 +285,22 @@ namespace FinalProject.Game
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 1);
                                 heroFunctions.MoveHeroDown();
                                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition(), 2);
+                                heroFunctions.SetDirectionDown();
                                 break;
+                            }
+                        case ConsoleKey.Spacebar:
+                            {
+                                if (heroFunctions.GetHero().arrows > 0 && enemyFunctions.GetEnemiesCount() > 0)
+                                {
+                                    HeroShootsArrow();
+                                    heroFunctions.GetHero().arrows--;
+                                    break;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+
                             }
                     }
 
@@ -262,6 +311,10 @@ namespace FinalProject.Game
                 if (counter % 10 == 0)
                 {
                     EnemiesAttack();
+                    MoveArrowUp();
+                    MoveArrowRight();
+                    MoveArrowDown();
+                    MoveArrowLeft();
                 }
                 if (counter % 15 == 0)
                 {
@@ -489,6 +542,7 @@ namespace FinalProject.Game
                 if (enemies[i].Health <= 0)
                 {
                     levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), enemyFunctions.GetEnemyHorizontalPosition(enemies[i]), enemyFunctions.GetEnemyVerticalPosition(enemies[i]), 1);
+                    enemyFunctions.ClearRender(enemies[i]);
                     enemyFunctions.DeleteEnemy(enemies[i]);
                     hero.enemiesKilled++;
                 }
@@ -513,9 +567,9 @@ namespace FinalProject.Game
         }
         public void LogLevel(int levelNumber)
         {
-            Console.SetCursorPosition(60, 5);
+            Console.SetCursorPosition(60, 6);
             Console.WriteLine("                                ");
-            Console.SetCursorPosition(60, 5);
+            Console.SetCursorPosition(60, 6);
             Console.WriteLine("Level " + (levelNumber+1));
         }
         public void HeroPicksItem(Item item)
@@ -534,9 +588,9 @@ namespace FinalProject.Game
                 }
                 itemFunctions.DeleteItem(item);
                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), itemFunctions.GetItemHorizontalPosition(item), itemFunctions.GetItemVerticalPosition(item), 1);
-                Console.SetCursorPosition(60, 6);
-                Console.WriteLine("                                                     ");
-                Console.SetCursorPosition(60, 6);
+                Console.SetCursorPosition(60, 7);
+                Console.WriteLine("                                                                  ");
+                Console.SetCursorPosition(60, 7);
                 Console.WriteLine("You picked a " + item.Name + ". You gained " + Math.Ceiling((hero.Health - healthBefore)) + " health.");
             }
             else if (item.type == 1)
@@ -544,9 +598,9 @@ namespace FinalProject.Game
                 hero.Attack = heroBaseAttack + item.Attack;
                 itemFunctions.DeleteItem(item);
                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), itemFunctions.GetItemHorizontalPosition(item), itemFunctions.GetItemVerticalPosition(item), 1);
-                Console.SetCursorPosition(60, 6);
-                Console.WriteLine("                                                     ");
-                Console.SetCursorPosition(60, 6);
+                Console.SetCursorPosition(60, 7);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(60, 7);
                 Console.WriteLine("You picked a " + item.Name + ". Your attack increased by " + Math.Ceiling(item.Attack) + ".");
             }
             else if (item.type == 2)
@@ -554,10 +608,175 @@ namespace FinalProject.Game
                 hero.defence = item.defence;
                 itemFunctions.DeleteItem(item);
                 levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), itemFunctions.GetItemHorizontalPosition(item), itemFunctions.GetItemVerticalPosition(item), 1);
-                Console.SetCursorPosition(60, 6);
-                Console.WriteLine("                                                    ");
-                Console.SetCursorPosition(60, 6);
+                Console.SetCursorPosition(60, 7);
+                Console.WriteLine("                                                                ");
+                Console.SetCursorPosition(60, 7);
                 Console.WriteLine("You picked " + item.Name + ". Your defence increased by " + Math.Ceiling(item.defence) + ".");
+            }
+            else if (item.type == 3)
+            {
+                hero.arrows = hero.arrows + item.count;
+                hero.arrowAttack = item.Attack;
+                itemFunctions.DeleteItem(item);
+                levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), itemFunctions.GetItemHorizontalPosition(item), itemFunctions.GetItemVerticalPosition(item), 1);
+                Console.SetCursorPosition(60, 7);
+                Console.WriteLine("                                                               ");
+                Console.SetCursorPosition(60, 7);
+                Console.WriteLine("You picked up " + item.count + " arrows.");
+            }
+        }
+
+        public void HeroShootsArrow()
+        {
+            Hero hero = heroFunctions.GetHero();
+            // Shoot Up
+            if (hero.direction == 0 )
+            {
+                Arrow newArrow = new Arrow("Arrow" + arrowFunctions.GetarrowsCount(),0, heroFunctions.GetHeroHorizontalPosition(),heroFunctions.GetHeroVerticalPosition()-1,0,2);
+                arrowFunctions.AddArrow(newArrow);
+            }
+            // Shoot Right
+            else if (hero.direction == 1)
+            {
+                Arrow newArrow = new Arrow("Arrow" + arrowFunctions.GetarrowsCount(), 1, heroFunctions.GetHeroHorizontalPosition() + 1, heroFunctions.GetHeroVerticalPosition(), 0, 2);
+                arrowFunctions.AddArrow(newArrow);
+            }
+            // Shoot Up
+            if (hero.direction == 2)
+            {
+                Arrow newArrow = new Arrow("Arrow" + arrowFunctions.GetarrowsCount(), 2, heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition() + 1, 0, 2);
+                arrowFunctions.AddArrow(newArrow);
+            }
+            // Shoot Right
+            else if (hero.direction == 3)
+            {
+                Arrow newArrow = new Arrow("Arrow" + arrowFunctions.GetarrowsCount(), 3, heroFunctions.GetHeroHorizontalPosition() - 1, heroFunctions.GetHeroVerticalPosition(), 0, 2);
+                arrowFunctions.AddArrow(newArrow);
+            }
+
+        }
+        public void MoveArrowUp()
+        {
+            List<Arrow> arrows = arrows = arrowFunctions.Returnarrows();
+            for (int i = 0; i < arrows.Count; i++)
+            {
+                if (arrows[i].direction == 0)
+                {
+                    if ((levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]),arrowFunctions.GetArrowVerticalPosition(arrows[i]) - 1)) == 0)
+                    {
+                        arrowFunctions.ClearRender(arrows[i]);
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 1);
+                        arrowFunctions.DeleteArrow(arrows[i]);
+                    }
+                    else if ((levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]) - 1)) == 4)
+                    {
+                        arrowFunctions.ClearRender(arrows[i]);
+                        enemyFunctions.GetEnemyByPosition(arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]) - 1).Health = enemyFunctions.GetEnemyByPosition(arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]) - 1).Health - heroFunctions.GetHero().arrowAttack;
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 1);
+                        arrowFunctions.DeleteArrow(arrows[i]);
+                    }
+                    else
+                    {
+                        arrowFunctions.ClearRender(arrows[i]);
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 1);
+                        arrowFunctions.MoveArrowUp(arrows[i]);
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 6);
+                        arrowFunctions.Render();
+                    }
+                }
+            }
+        }
+        public void MoveArrowRight()
+        {
+            List<Arrow> arrows = arrows = arrowFunctions.Returnarrows();
+            for (int i = 0; i < arrows.Count; i++)
+            {
+                if (arrows[i].direction == 1)
+                {
+                    if ((levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]) + 1, arrowFunctions.GetArrowVerticalPosition(arrows[i]))) == 0)
+                    {
+                        arrowFunctions.ClearRender(arrows[i]);
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 1);
+                        arrowFunctions.DeleteArrow(arrows[i]);
+                    }
+                    else if ((levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]) + 1, arrowFunctions.GetArrowVerticalPosition(arrows[i]))) == 4)
+                    {
+                        arrowFunctions.ClearRender(arrows[i]);
+                        enemyFunctions.GetEnemyByPosition(arrowFunctions.GetArrowHorizontalPosition(arrows[i]) + 1, arrowFunctions.GetArrowVerticalPosition(arrows[i])).Health = enemyFunctions.GetEnemyByPosition(arrowFunctions.GetArrowHorizontalPosition(arrows[i]) + 1, arrowFunctions.GetArrowVerticalPosition(arrows[i])).Health - heroFunctions.GetHero().arrowAttack;
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 1);
+                        arrowFunctions.DeleteArrow(arrows[i]);
+                    }
+                    else
+                    {
+                        arrowFunctions.ClearRender(arrows[i]);
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 1);
+                        arrowFunctions.MoveArrowRight(arrows[i]);
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 6);
+                        arrowFunctions.Render();
+                    }
+                }
+            }
+        }
+        public void MoveArrowDown()
+        {
+            List<Arrow> arrows = arrows = arrowFunctions.Returnarrows();
+            for (int i = 0; i < arrows.Count; i++)
+            {
+                if (arrows[i].direction == 2)
+                {
+                    if ((levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]) + 1)) == 0)
+                    {
+                        arrowFunctions.ClearRender(arrows[i]);
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 1);
+                        arrowFunctions.DeleteArrow(arrows[i]);
+                    }
+                    else if ((levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]) + 1)) == 4)
+                    {
+                        arrowFunctions.ClearRender(arrows[i]);
+                        enemyFunctions.GetEnemyByPosition(arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]) + 1).Health = enemyFunctions.GetEnemyByPosition(arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]) + 1).Health - heroFunctions.GetHero().arrowAttack;
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 1);
+                        arrowFunctions.DeleteArrow(arrows[i]);
+                    }
+                    else
+                    {
+                        arrowFunctions.ClearRender(arrows[i]);
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 1);
+                        arrowFunctions.MoveArrowDown(arrows[i]);
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 6);
+                        arrowFunctions.Render();
+                    }
+                }
+            }
+        }
+        public void MoveArrowLeft()
+        {
+            List<Arrow> arrows = arrows = arrowFunctions.Returnarrows();
+            for (int i = 0; i < arrows.Count; i++)
+            {
+                if (arrows[i].direction == 3)
+                {
+                    if ((levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]) - 1, arrowFunctions.GetArrowVerticalPosition(arrows[i]))) == 0)
+                    {
+                        arrowFunctions.ClearRender(arrows[i]);
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 1);
+                        arrowFunctions.DeleteArrow(arrows[i]);
+                    }
+                    else if ((levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]) - 1, arrowFunctions.GetArrowVerticalPosition(arrows[i]))) == 4)
+                    {
+                        arrowFunctions.ClearRender(arrows[i]);
+                        enemyFunctions.GetEnemyByPosition(arrowFunctions.GetArrowHorizontalPosition(arrows[i]) - 1, arrowFunctions.GetArrowVerticalPosition(arrows[i])).Health = enemyFunctions.GetEnemyByPosition(arrowFunctions.GetArrowHorizontalPosition(arrows[i]) - 1, arrowFunctions.GetArrowVerticalPosition(arrows[i])).Health - heroFunctions.GetHero().arrowAttack;
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 1);
+                        arrowFunctions.DeleteArrow(arrows[i]);
+                    }
+                    else
+                    {
+                        arrowFunctions.ClearRender(arrows[i]);
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 1);
+                        arrowFunctions.MoveArrowLeft(arrows[i]);
+                        levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), arrowFunctions.GetArrowHorizontalPosition(arrows[i]), arrowFunctions.GetArrowVerticalPosition(arrows[i]), 6);
+                        arrowFunctions.Render();
+                    }
+                }
             }
         }
     }

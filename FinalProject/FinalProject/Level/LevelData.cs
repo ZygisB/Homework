@@ -15,6 +15,7 @@ namespace FinalProject.Level
          * Item - 3
          * Enemy - 4
          * Doors - 5
+         * Arrows - 6
          */
         public int[,] levelData { get; set; }
         public LevelData(int[,] levelData)

@@ -10,10 +10,12 @@ namespace FinalProject.Unit
     {
         public int type { get; set; }
         public double defence { get; set; }
-        public Item(string name, int type, int x, int y, double health, double attack, double defence) : base(name, x, y, health, attack)
+        public int count { get; set; }
+        public Item(string name, int type, int x, int y, double health, double attack, double defence, int count = 0) : base(name, x, y, health, attack)
         {
             this.type = type;
             this.defence = defence;
+            this.count = count;
         }
     }
 }
