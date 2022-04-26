@@ -69,9 +69,9 @@ namespace FinalProject.Unit
             Console.WriteLine("                                   ");
             Console.SetCursorPosition(60, 2);
             Console.WriteLine("Defence: " + Math.Ceiling(hero.defence));
-            Console.SetCursorPosition(60, 3);
+            Console.SetCursorPosition(60, 4);
             Console.WriteLine("                                   ");
-            Console.SetCursorPosition(60, 3);
+            Console.SetCursorPosition(60, 4);
             Console.WriteLine("Enemies killed: " + hero.enemiesKilled);
             Console.SetCursorPosition(60, 3);
             Console.WriteLine("                                   ");

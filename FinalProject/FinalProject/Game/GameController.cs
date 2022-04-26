@@ -50,7 +50,7 @@ namespace FinalProject.Game
                 if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), x, y) == 1)
                 {
                     string name = "Enemy" + enemyCount;
-                    Enemy newEnemy = new Enemy(enemyCount, name, x, y, 20, 4);
+                    Enemy newEnemy = new Enemy(enemyCount, name, x, y, 20 + 2*levelNumber, 3 + levelNumber);
                     enemyFunctions.AddEnemy(newEnemy);
                     levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), x, y, 4);
                     enemyCount++;
@@ -78,7 +78,7 @@ namespace FinalProject.Game
                     int y = rnd.Next(0, 39);
                     if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), x, y) == 1)
                     {
-                        itemFunctions.GeneratePotion(x, y, 15);
+                        itemFunctions.GeneratePotion(x, y, 15 + rnd.Next(1, 7) * levelNumber);
                         potionCount++;
                         levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), x, y, 3);
                     }
@@ -93,7 +93,7 @@ namespace FinalProject.Game
                     int y = rnd.Next(0, 39);
                     if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), x, y) == 1)
                     {
-                        itemFunctions.GenerateSword(x, y, 3);
+                        itemFunctions.GenerateSword(x, y, 3 + rnd.Next(1, 2) * levelNumber);
                         swordCount++;
                         levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), x, y, 3);
                     }
@@ -107,7 +107,7 @@ namespace FinalProject.Game
                     int y = rnd.Next(0, 39);
                     if (levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), x, y) == 1)
                     {
-                        itemFunctions.GenerateArmor(x, y, 10);
+                        itemFunctions.GenerateArmor(x, y, 10 + rnd.Next(1,5)*levelNumber);
                         armorCount++;
                         levelFunctions.ChangeCellInfo(levelFunctions.ReturnLevel(), x, y, 3);
                     }
@@ -635,25 +635,25 @@ namespace FinalProject.Game
         {
             Hero hero = heroFunctions.GetHero();
             // Shoot Up
-            if (hero.direction == 0 )
+            if (hero.direction == 0 && levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition() - 1) !=0)
             {
                 Arrow newArrow = new Arrow("Arrow" + arrowFunctions.GetarrowsCount(),0, heroFunctions.GetHeroHorizontalPosition(),heroFunctions.GetHeroVerticalPosition()-1,0,2);
                 arrowFunctions.AddArrow(newArrow);
             }
             // Shoot Right
-            else if (hero.direction == 1)
+            else if (hero.direction == 1 && levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition() + 1, heroFunctions.GetHeroVerticalPosition()) != 0)
             {
                 Arrow newArrow = new Arrow("Arrow" + arrowFunctions.GetarrowsCount(), 1, heroFunctions.GetHeroHorizontalPosition() + 1, heroFunctions.GetHeroVerticalPosition(), 0, 2);
                 arrowFunctions.AddArrow(newArrow);
             }
-            // Shoot Up
-            if (hero.direction == 2)
+            // Shoot Down
+            if (hero.direction == 2 && levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition() + 1) != 0)
             {
                 Arrow newArrow = new Arrow("Arrow" + arrowFunctions.GetarrowsCount(), 2, heroFunctions.GetHeroHorizontalPosition(), heroFunctions.GetHeroVerticalPosition() + 1, 0, 2);
                 arrowFunctions.AddArrow(newArrow);
             }
-            // Shoot Right
-            else if (hero.direction == 3)
+            // Shoot Left
+            else if (hero.direction == 3 && levelFunctions.GetCellInfo(levelFunctions.ReturnLevel(), heroFunctions.GetHeroHorizontalPosition() - 1, heroFunctions.GetHeroVerticalPosition()) != 0)
             {
                 Arrow newArrow = new Arrow("Arrow" + arrowFunctions.GetarrowsCount(), 3, heroFunctions.GetHeroHorizontalPosition() - 1, heroFunctions.GetHeroVerticalPosition(), 0, 2);
                 arrowFunctions.AddArrow(newArrow);
