@@ -308,7 +308,7 @@ namespace FinalProject.Game
 
                 ClearDeadEnemies();
 
-                if (counter % 10 == 0)
+                if (counter % 5 == 0)
                 {
                     EnemiesAttack();
                     MoveArrowUp();
@@ -316,7 +316,12 @@ namespace FinalProject.Game
                     MoveArrowDown();
                     MoveArrowLeft();
                 }
-                if (counter % 15 == 0)
+
+                if (counter % 10 == 0)
+                {
+                    EnemiesAttack();
+                }
+                if (counter % 12 == 0)
                 {
                     MoveEnemies();
                 }
